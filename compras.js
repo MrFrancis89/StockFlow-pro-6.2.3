@@ -1,6 +1,6 @@
 // compras.js
-import { coletarDadosDaTabela } from './ui.js';
-import { obterDataAmanha } from './utils.js'; // criaremos a seguir
+import { coletarDadosDaTabela } from './tabela.js';
+import { obterDataAmanha } from './utils.js';
 
 const ulCompras = document.getElementById("lista-compras-visual");
 const areaCompras = document.getElementById("area-compras");
