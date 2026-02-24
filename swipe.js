@@ -1,7 +1,7 @@
 // swipe.js
 import { mostrarConfirmacao } from './confirm.js';
 import { salvarDados } from './storage.js';
-import { coletarDadosDaTabela } from './ui.js';
+import { coletarDadosDaTabela } from './tabela.js';
 import { abrirModalAlerta } from './alerta.js';
 import { mostrarToast } from './toast.js';
 import { atualizarPainelCompras } from './compras.js';
@@ -79,7 +79,6 @@ export function initSwipe() {
         }
     }, { passive: true });
 
-    // Configura os botões do swipe
     swipeBg.innerHTML = `
         <button class="swipe-btn swipe-btn-excluir" aria-label="Apagar item">🗑️ Apagar</button>
         <button class="swipe-btn swipe-btn-alerta" aria-label="Configurar alerta">🔔 Alerta</button>
@@ -90,7 +89,6 @@ export function initSwipe() {
     swipeBg.style.alignItems = 'stretch';
     swipeBg.style.padding = '0';
 
-    // Listeners para os botões (precisam ser configurados após a criação)
     document.querySelectorAll('.swipe-btn-excluir').forEach(btn => {
         btn.addEventListener('click', removerLinhaSwipe);
     });
@@ -118,7 +116,7 @@ function removerLinhaSwipe() {
         swipedRow.remove();
         const dados = coletarDadosDaTabela();
         salvarDados(dados);
-        atualizarPainelCompras(); // <-- Atualiza a lista de compras
+        atualizarPainelCompras();
         mostrarToast("Removido 🗑️");
         closeSwipe(swipedRow);
     });
