@@ -6,7 +6,8 @@ import {
     carregarTema, salvarTema, carregarPosicaoLupa, salvarPosicaoLupa,
     dicaSwipeFoiVista, marcarDicaSwipeVista, carregarUltimaVersao, salvarUltimaVersao
 } from './storage.js';
-import { renderizarListaCompleta, coletarDadosDaTabela, atualizarStatusSave, salvarEAtualizar } from './ui.js';
+import { renderizarListaCompleta, atualizarStatusSave, salvarEAtualizar } from './ui.js';
+import { coletarDadosDaTabela } from './tabela.js';
 import { atualizarPainelCompras, gerarTextoCompras } from './compras.js';
 import { darFeedback, obterDataAtual, obterDataAmanha, copiarParaClipboard } from './utils.js';
 import { mostrarToast, mostrarAlertaElegante } from './toast.js';
@@ -18,10 +19,18 @@ import { parseAndUpdateQuantity } from './parser.js';
 import { initSwipe } from './swipe.js';
 import { iniciarNavegacao } from './navegacao.js';
 import { alternarCheck, alternarTodos } from './eventos.js';
+import { atualizarDropdown } from './dropdown.js';
 
-const VERSAO_ATUAL = "v6.2.0";
+const VERSAO_ATUAL = "v6.2.1";
 
 const releaseNotes = {
+    "v6.2.1": `✨ **StockFlow Pro v6.2.1**
+
+- Correção de bugs: 
+  - Função `atualizarDropdown` agora está disponível globalmente.
+  - Toast de alerta agora funciona corretamente.
+  - Eliminada dependência circular entre módulos.
+- Melhorias na estabilidade do código.`,
     "v6.2.0": `✨ **StockFlow Pro v6.2.0**
 
 - Nova aba "Adicionar" para separar o formulário de inclusão de produtos.
@@ -126,21 +135,6 @@ function filtrarGeral() {
         }
         header.style.display = temItemVisivel ? "" : "none";
     });
-}
-
-function atualizarDropdown() {
-    var select = document.getElementById('filtroSelect');
-    var v = select.value;
-    select.innerHTML = '<option value="">📂 ITENS</option>';
-    var nomes = [];
-    document.querySelectorAll(".nome-prod").forEach(td => nomes.push(td.innerText.replace(/(\r\n|\n|\r)/gm, " ").trim()));
-    nomes.sort().forEach(n => {
-        var o = document.createElement("option");
-        o.value = n;
-        o.text = n;
-        select.add(o);
-    });
-    select.value = v;
 }
 
 function adicionarManual(salvarNoPadrao) {
