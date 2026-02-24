@@ -1,7 +1,7 @@
 // eventos.js
 import { darFeedback } from './utils.js';
 import { salvarDados } from './storage.js';
-import { coletarDadosDaTabela } from './ui.js';
+import { coletarDadosDaTabela } from './tabela.js';
 import { atualizarPainelCompras } from './compras.js';
 
 export function alternarCheck(box) {
@@ -15,7 +15,7 @@ export function alternarCheck(box) {
     }
     const dados = coletarDadosDaTabela();
     salvarDados(dados);
-    atualizarPainelCompras(); // <-- Atualiza a lista de compras
+    atualizarPainelCompras();
 }
 
 export function alternarTodos(masterBox) {
@@ -34,5 +34,5 @@ export function alternarTodos(masterBox) {
     });
     const dados = coletarDadosDaTabela();
     salvarDados(dados);
-    atualizarPainelCompras(); // <-- Atualiza a lista de compras
+    atualizarPainelCompras();
 }
