@@ -2,14 +2,13 @@
 import { darFeedback } from './utils.js';
 import { mostrarToast } from './toast.js';
 import { salvarDados } from './storage.js';
-import { coletarDadosDaTabela } from './ui.js';
+import { coletarDadosDaTabela } from './tabela.js';
 import { verificarAlertas } from './alerta.js';
 
 let inputCalculadoraAtual = null;
 let expressaoCalc = "";
 
 export function abrirCalculadora(inputElement) {
-    // (mesmo código anterior, usando as variáveis locais)
     darFeedback();
     inputElement.blur();
     inputCalculadoraAtual = inputElement;
@@ -68,7 +67,6 @@ export function calcSalvar() {
         } else {
             inputCalculadoraAtual.value = "";
         }
-        // Salva os dados atuais (pode ser que o campo seja da tabela)
         const dados = coletarDadosDaTabela();
         salvarDados(dados);
         fecharCalculadora();
@@ -80,7 +78,6 @@ export function calcSalvar() {
     }
 }
 
-// Para uso em outros módulos (ex: teclado.js)
 export function getInputCalculadoraAtual() {
     return inputCalculadoraAtual;
-}
+}p
