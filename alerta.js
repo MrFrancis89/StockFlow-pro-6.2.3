@@ -45,6 +45,8 @@ export function salvarAlerta() {
 
 export function verificarAlertas() {
     let dados = JSON.parse(localStorage.getItem("estoqueDados_v4_categorias") || "[]");
+    
+    // Primeiro, marca os itens com estoque abaixo do mínimo
     dados.forEach(item => {
         let qtd = parseFloat((item.q || '').replace(',', '.')) || 0;
         if (item.min !== null && item.min !== undefined && qtd < item.min) {
@@ -62,6 +64,24 @@ export function verificarAlertas() {
         }
         if (item.max !== null && item.max !== undefined && qtd > item.max) {
             mostrarToast(`📦 Estoque excessivo: ${item.n}`);
+        }
+    });
+
+    // Agora, desmarca os itens que têm quantidade >= mínimo (ou seja, não estão mais em alerta)
+    dados.forEach(item => {
+        let qtd = parseFloat((item.q || '').replace(',', '.')) || 0;
+        // Se o mínimo está definido e a quantidade é maior ou igual ao mínimo, e o item está marcado, desmarca
+        if (item.min !== null && item.min !== undefined && qtd >= item.min) {
+            document.querySelectorAll("#lista-itens-container tr:not(.categoria-header-row)").forEach(r => {
+                let nome = r.querySelector('.nome-prod').innerText.trim();
+                if (nome === item.n) {
+                    let chk = r.querySelector('input[type="checkbox"]');
+                    if (chk.checked) {
+                        chk.checked = false;
+                        alternarCheck(chk);
+                    }
+                }
+            });
         }
     });
 }
