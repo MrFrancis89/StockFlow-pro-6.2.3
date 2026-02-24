@@ -1,8 +1,8 @@
 // alerta.js
 import { mostrarToast } from './toast.js';
 import { salvarDados } from './storage.js';
-import { coletarDadosDaTabela } from './ui.js';
-import { alternarCheck } from './eventos.js'; // será criado
+import { coletarDadosDaTabela } from './tabela.js';
+import { alternarCheck } from './eventos.js';
 
 let itemAlertaAtual = null;
 
