@@ -80,4 +80,4 @@ export function calcSalvar() {
 
 export function getInputCalculadoraAtual() {
     return inputCalculadoraAtual;
-}p
+}
