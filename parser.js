@@ -1,7 +1,7 @@
 // parser.js
 import { mostrarToast } from './toast.js';
 import { salvarDados } from './storage.js';
-import { coletarDadosDaTabela } from './ui.js';
+import { coletarDadosDaTabela } from './tabela.js';
 
 export function parseFractionToDecimal(str) {
     if (!str) return '';
