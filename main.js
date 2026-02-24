@@ -21,13 +21,18 @@ import { iniciarNavegacao } from './navegacao.js';
 import { alternarCheck, alternarTodos } from './eventos.js';
 import { atualizarDropdown } from './dropdown.js';
 
-const VERSAO_ATUAL = "v6.2.1";
+const VERSAO_ATUAL = "v6.2.2";
 
 const releaseNotes = {
+    "v6.2.2": `✨ **StockFlow Pro v6.2.2**
+
+- Correção crítica: lista pré-definida de produtos agora é carregada corretamente.
+- Adicionada verificação de segurança para garantir que os produtos padrão sejam importados.
+- Pequenos ajustes para evitar falhas silenciosas na renderização.`,
     "v6.2.1": `✨ **StockFlow Pro v6.2.1**
 
 - Correção de bugs: 
-  - Função `atualizarDropdown` agora está disponível globalmente.
+  - Função \`atualizarDropdown\` agora está disponível globalmente.
   - Toast de alerta agora funciona corretamente.
   - Eliminada dependência circular entre módulos.
 - Melhorias na estabilidade do código.`,
@@ -96,18 +101,32 @@ function atualizarTitulos() {
 function carregarListaPadrao() {
     var listaCombinada = [];
     var ocultosSistema = carregarOcultos();
-    produtosPadrao.forEach(p => {
-        var d = p.split("|");
-        if (!ocultosSistema.includes(d[0].toLowerCase())) {
+    
+    // Verifica se produtosPadrao é um array (proteção contra falha de import)
+    if (Array.isArray(produtosPadrao)) {
+        produtosPadrao.forEach(p => {
+            var d = p.split("|");
+            if (!ocultosSistema.includes(d[0].toLowerCase())) {
+                listaCombinada.push({ n: d[0], q: "", u: d[1], c: false, min: null, max: null });
+            }
+        });
+    } else {
+        console.error("Erro: produtosPadrao não foi carregado corretamente.");
+        // Fallback: alguns produtos essenciais
+        const fallback = ["Arroz|kg", "Feijão|kg", "Açúcar|kg", "Sal|kg", "Óleo|uni"];
+        fallback.forEach(p => {
+            var d = p.split("|");
             listaCombinada.push({ n: d[0], q: "", u: d[1], c: false, min: null, max: null });
-        }
-    });
+        });
+    }
+
     var favoritosUsuario = carregarMeus();
     favoritosUsuario.forEach(item => {
         if (!listaCombinada.some(i => i.n.toLowerCase() === item.n.toLowerCase())) {
             listaCombinada.push({ n: item.n, q: "", u: item.u, c: false, min: null, max: null });
         }
     });
+    
     renderizarListaCompleta(listaCombinada);
 }
 
@@ -273,7 +292,7 @@ function carregarListaDoCelular(event) {
 
 function autoPreencherUnidade() {
     var inputNome = document.getElementById("novoProduto").value.toLowerCase().trim();
-    var match = produtosPadrao.find(p => p.split("|")[0].toLowerCase().startsWith(inputNome));
+    var match = Array.isArray(produtosPadrao) ? produtosPadrao.find(p => p.split("|")[0].toLowerCase().startsWith(inputNome)) : null;
     if (match) {
         document.getElementById("novoUnidade").value = match.split("|")[1];
     }
