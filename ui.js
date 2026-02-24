@@ -3,6 +3,8 @@ import { identificarCategoria, coresCategorias, nomesCategorias } from './catego
 import { salvarDados } from './storage.js';
 import { abrirCalculadora } from './calculadora.js';
 import { atualizarPainelCompras } from './compras.js';
+import { coletarDadosDaTabela } from './tabela.js';
+import { atualizarDropdown } from './dropdown.js';
 
 let containerItens = document.getElementById("lista-itens-container");
 
@@ -55,57 +57,16 @@ export function inserirLinhaNoDOM(n, q, u, chk, min, max) {
     containerItens.appendChild(tr);
 }
 
-export function coletarDadosDaTabela() {
-    let dados = [];
-    document.querySelectorAll("#lista-itens-container tr:not(.categoria-header-row)").forEach(r => {
-        var c = r.querySelectorAll("td");
-        if (c.length > 0) {
-            let nome = c[1].querySelector('.nome-prod').innerText.replace(/(\r\n|\n|\r)/gm, " ").trim();
-            let qtd = c[2].querySelector("input").value.trim();
-            let unid = c[3].querySelector("select").value;
-            let chk = c[0].querySelector("input[type='checkbox']").checked;
-            let min = r.dataset.min ? parseFloat(r.dataset.min) : null;
-            let max = r.dataset.max ? parseFloat(r.dataset.max) : null;
-            dados.push({ n: nome, q: qtd, u: unid, c: chk, min: min, max: max });
-        }
-    });
-    return dados;
-}
-
 export function atualizarStatusSave() {
     var s = document.getElementById("status-save");
     s.style.opacity = "1";
     setTimeout(() => s.style.opacity = "0", 1500);
 }
 
-// Função que será chamada após salvar
 export function salvarEAtualizar() {
     const dados = coletarDadosDaTabela();
     salvarDados(dados);
     renderizarListaCompleta(dados);
     atualizarDropdown();
-    atualizarPainelCompras(); // <-- Atualiza a lista de compras
-}
-
-// Função para atualizar dropdown (precisa estar aqui ou importada)
-function atualizarDropdown() {
-    // Implementação já existe no main, mas podemos deixar vazia ou importar
-    // Na verdade, essa função é chamada aqui, mas não está definida neste módulo.
-    // Vamos importar do main? Melhor: mover a função para um módulo separado ou defini-la aqui.
-    // Como é uma função que depende do DOM, podemos importar do main ou replicar.
-    // Para simplificar, vou importar do main (mas isso criaria dependência circular). 
-    // Vou replicar a lógica aqui mesmo.
-    var select = document.getElementById('filtroSelect');
-    if (!select) return;
-    var v = select.value;
-    select.innerHTML = '<option value="">📂 ITENS</option>';
-    var nomes = [];
-    document.querySelectorAll(".nome-prod").forEach(td => nomes.push(td.innerText.replace(/(\r\n|\n|\r)/gm, " ").trim()));
-    nomes.sort().forEach(n => {
-        var o = document.createElement("option");
-        o.value = n;
-        o.text = n;
-        select.add(o);
-    });
-    select.value = v;
+    atualizarPainelCompras();
 }
