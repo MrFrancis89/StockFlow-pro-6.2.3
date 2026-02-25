@@ -37,7 +37,7 @@
             </div>
             <div id="whatsnew-content" style="max-height: 300px; overflow-y: auto; font-size: 14px; line-height: 1.6; color: var(--text); white-space: pre-wrap;"></div>
             <div style="margin-top: 20px; text-align: center;">
-                <button class="fechar-whatsnew" style="background-color: var(--btn-green); color: white; border: none; padding: 10px 30px; border-radius: 8px;">OK</button>
+                <button class="fechar-whatsnew" style="background-color: var(--btn-primary); color: white; border: none; padding: 10px 30px; border-radius: 8px;">OK</button>
             </div>
         </div>
     </div>
@@ -70,8 +70,7 @@
                 <button class="calc-btn" data-calc="0" style="grid-column: span 2;">0</button>
                 <button class="calc-btn" data-calc=",">,</button>
             </div>
-            <!-- Botão para alternar para teclado -->
-            <button id="calc-btn-teclado" class="btn-half" style="margin-top: 10px; background: var(--btn-blue); color: white;">⌨️ Usar teclado</button>
+            <button id="calc-btn-teclado" class="btn-half" style="margin-top: 10px; background: var(--btn-secondary); color: var(--text);">⌨️ Usar teclado</button>
         </div>
     </div>
 
@@ -91,7 +90,7 @@
                 <input type="number" id="alerta-max" placeholder="0 (sem alerta)" style="width: 100%; padding: 10px;">
             </div>
             <div class="modal-buttons">
-                <button id="salvar-alerta" style="flex: 1; background-color: var(--btn-green); color: white;">Salvar</button>
+                <button id="salvar-alerta" style="flex: 1; background-color: var(--btn-primary); color: white;">Salvar</button>
                 <button class="fechar-modal-alerta" style="flex: 1; background: transparent; border: 1px solid var(--border);">Cancelar</button>
             </div>
         </div>
@@ -172,10 +171,10 @@
             <button class="btn-zap" id="btn-copiar-estoque">Copiar Estoque</button>
         </div>
 
-        <button id="btn-novo-dia">☀ INICIAR NOVO DIA (ZERAR QTD)</button>
-        <button id="btn-exportar">💾 SALVAR LISTA NO CELULAR</button>
-        <button id="btn-importar">📂 CARREGAR LISTA DO CELULAR</button>
-        <button id="btn-reset">⚠ RESTAURAR LISTA PADRÃO</button>
+        <button id="btn-novo-dia" class="btn-primary">☀ INICIAR NOVO DIA (ZERAR QTD)</button>
+        <button id="btn-exportar" class="btn-secondary">💾 SALVAR LISTA NO CELULAR</button>
+        <button id="btn-importar" class="btn-secondary">📂 CARREGAR LISTA DO CELULAR</button>
+        <button id="btn-reset" class="btn-danger">⚠ RESTAURAR LISTA PADRÃO</button>
         <input type="file" id="input-arquivo" accept=".json" style="display: none;">
     </section>
 
@@ -221,9 +220,9 @@
                 </div>
                 
                 <div class="action-group">
-                    <button id="add-btn" class="btn-half">Adicionar</button>
-                    <button id="add-star-btn" class="btn-half" title="Adicionar item e fixar na lista padrão">⭐ Fixar</button>
-                    <button id="remove-star-btn" class="btn-half" title="Remover item da lista padrão">🗑️ Apagar</button>
+                    <button id="add-btn" class="btn-half btn-secondary">Adicionar</button>
+                    <button id="add-star-btn" class="btn-half btn-warning" title="Adicionar item e fixar na lista padrão">⭐ Fixar</button>
+                    <button id="remove-star-btn" class="btn-half btn-danger" title="Remover item da lista padrão">🗑️ Apagar</button>
                 </div>
             </div>
             <div id="status-save">Salvo.</div>
@@ -236,7 +235,6 @@
         <button class="btn-nav" id="btn-scroll-bottom">▼</button>
     </div>
 
-    <!-- Script principal -->
     <script type="module" src="main.js"></script>
 </body>
 </html>
